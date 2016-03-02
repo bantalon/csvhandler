@@ -18,22 +18,25 @@ def get_files(options, args):
     infile = open(args[0], 'r') if len(args) > 0 else sys.stdin
     return infile, sys.stdout
 
+def get_map_indexed_by_int_from_json_file(path):
+    if not path:
+        return {}
+    with open(path) as json_file:
+        map_indexed_by_string = json.load(json_file)
+    map_indexed_by_int = {int(k):v for k, v in map_indexed_by_string.iteritems()}
+    return map_indexed_by_int
 
 def get_processor(options, args):
     fields = map(int, options.fields.split(',')) if options.fields else None
-    if options.grep_fields_file:
-        with open(options.grep_fields_file) as grep_fields_file:
-            raw_map = json.load(grep_fields_file)
-        # Changing the keys to integers
-        grep_fields_map = {int(k):v for k, v in raw_map.iteritems()}
-    else:
-        grep_fields_map = {}
+    grep_fields_map = get_map_indexed_by_int_from_json_file(options.grep_fields_file)
+    substitutions_map = get_map_indexed_by_int_from_json_file(options.substitutions_file)
     return Processor(fields=fields,
                      skip=options.skip,
                      delimiter=options.delimiter,
                      quotechar=options.quotechar,
                      invert=options.inverse,
-                     grep_fields_map=grep_fields_map)
+                     grep_fields_map=grep_fields_map,
+                     substitutions_map=substitutions_map)
 
 
 def get_writer(outfile, options):
@@ -72,6 +75,8 @@ if __name__ == '__main__':
     parser.add_option('--out-quotechar', dest='out_quotechar', default='"',
                       help="Quote character to use for output")
     parser.add_option('--grep-fields-file', dest='grep_fields_file', default=None,
-                      help='File containing a JSON with which values to grep on each field. {"3": "OnDemand", "13": "Compute Instance"}')
+                      help='A path of file containing a JSON with values to grep on each field. {"3": "OnDemand", "13": "Compute Instance"}')
+    parser.add_option('--substitutions-file', dest='substitutions_file', default=None,
+                      help='A path of file ile containing a JSON with substitutions to perform on each field. {"3": {"US East (N. Virginia)": "us-east-1"}}')
     (options, args) = parser.parse_args()
     main(options, args)
