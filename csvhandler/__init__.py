@@ -10,16 +10,23 @@ VERSION = '0.3.2'
 class Processor(object):
 
     def __init__(self, fields=None, invert=False, delimiter=',',
-            quotechar='"', skip=0):
+            quotechar='"', skip=0, grep_fields_map={}):
         self.fields = fields
         self.invert = invert
         self.delimiter = delimiter
         self.quotechar = quotechar
         self.skip = skip
         self.validators = []
+        self.grep_fields_map = grep_fields_map
 
     def add_validator(self, f):
         self.validators.append(f)
+
+    def skip_due_to_grep(self, row):
+        for field_index, grep_expression in self.grep_fields_map.iteritems():
+            if row[field_index] != grep_expression:
+                return True
+        return False
 
     def process(self, file_handle):
         reader = csv.reader(file_handle, delimiter=self.delimiter,
@@ -27,6 +34,8 @@ class Processor(object):
         for row in reader:
             output = None
             if reader.line_num <= self.skip:
+                continue
+            if self.skip_due_to_grep(row):
                 continue
             if self.fields:
                 if not self.invert:
