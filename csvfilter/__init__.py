@@ -2,7 +2,7 @@ import csv
 import sys
 
 # Avoid issue with fields larger than max size
-csv.field_size_limit(sys.maxsize)
+csv.field_size_limit(sys.maxint)
 
 VERSION = '0.3.2'
 
