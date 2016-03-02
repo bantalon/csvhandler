@@ -1,5 +1,5 @@
 ================================
-csvfilter - Simple CSV filtering
+csvhandler - Simple CSV filtering
 ================================
 
 A simple wrapper around Python's CSV module to provide a command-line tool for
@@ -13,38 +13,38 @@ Install
 
 From PyPi::
 
-    pip install csvfilter
+    pip install csvhandler
 
 Use
 ---
 
 Pluck fields 1, 3 and 5 from ``in.csv``::
 
-    csvfilter -f 1,3,5 in.csv > out.csv
+    csvhandler -f 1,3,5 in.csv > out.csv
 
 Pluck all fields apart from column 2 from STDIN::
 
-    cat in.csv | csvfilter -f 2 -i > out.csv
+    cat in.csv | csvhandler -f 2 -i > out.csv
 
 Convert pipe-separated file to comma-separated (by default, output is 
 comma-separated)::
 
-    csvfilter -d"|" in.psv > out.csv 
+    csvhandler -d"|" in.psv > out.csv 
 
 Skip that pesky header row::
 
-    cat in.csv | csvfilter --skip=1
+    cat in.csv | csvhandler --skip=1
 
-As you can see, CSV data can be supplied through STDIN or by running ``csvfilter`` directly on a
+As you can see, CSV data can be supplied through STDIN or by running ``csvhandler`` directly on a
 file.
 
 Help is in the usual place::
 
-    $ csvfilter --help
+    $ csvhandler --help
 
-    Usage: csvfilter [options] [inputfile]
+    Usage: csvhandler [options] [inputfile]
 
-    Source: https://github.com/codeinthehole/csvfilter/
+    Source: https://github.com/codeinthehole/csvhandler/
 
     Options:
     -h, --help            show this help message and exit
@@ -67,7 +67,7 @@ Report issues
 
 Use the `Github issue tracker`_ or, better still...
 
-.. _`Github issue tracker`: https://github.com/codeinthehole/csvfilter/issues
+.. _`Github issue tracker`: https://github.com/codeinthehole/csvhandler/issues
 
 Contribute
 ----------
@@ -82,7 +82,7 @@ Run the tests with::
 
 and, if it helps, use the fixture files to test your amendments::
 
-    cat fixtures/au.csv | csvfilter -f 3,1,2 -s 1
-    csvfilter fixutres/au.csv -f 1,2 -i
+    cat fixtures/au.csv | csvhandler -f 3,1,2 -s 1
+    csvhandler fixutres/au.csv -f 1,2 -i
 
 Have fun.

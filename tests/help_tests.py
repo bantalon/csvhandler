@@ -1,13 +1,13 @@
 import unittest
 import envoy
 
-from csvfilter import VERSION
+from csvhandler import VERSION
 
 
 class HelpOutputTests(unittest.TestCase):
 
     def setUp(self):
-        self.r = envoy.run('csvfilter -h')
+        self.r = envoy.run('csvhandler -h')
 
     def test_help_output(self):
         self.assertEqual(0, self.r.status_code)

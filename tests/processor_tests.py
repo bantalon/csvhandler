@@ -1,6 +1,6 @@
 import unittest
 
-from csvfilter import Processor
+from csvhandler import Processor
 
 SAMPLE_CSV = ['a,b,c', 'd,e,f', 'g,h,i']
 SAMPLE_PSV = ['a|b|c', 'd|e|f', 'g|h|i']
