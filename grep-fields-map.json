@@ -1,5 +1,6 @@
 {
   "3": "^OnDemand$",
   "13": "^Compute Instance$",
+  "34": "^Shared$",
   "35": "^(?!Yes$).*$"
 }
