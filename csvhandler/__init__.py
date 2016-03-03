@@ -1,3 +1,4 @@
+import re
 import csv
 import sys
 
@@ -25,7 +26,7 @@ class Processor(object):
 
     def skip_due_to_grep(self, row):
         for field_index, grep_expression in self.grep_fields_map.iteritems():
-            if row[field_index] != grep_expression:
+            if not re.match(grep_expression, row[field_index]):
                 return True
         return False
 

@@ -1,4 +1,5 @@
 {
-  "3": "OnDemand",
-  "13": "Compute Instance"
+  "3": "^OnDemand$",
+  "13": "^Compute Instance$",
+  "35": "^(?!Yes$).*$"
 }
